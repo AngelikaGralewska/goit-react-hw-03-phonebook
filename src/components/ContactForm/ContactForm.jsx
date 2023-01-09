@@ -1,48 +1,26 @@
 import React, { Component } from 'react';
 import style from './ContactForm.module.css';
+import PropTypes from 'prop-types';
 
 
 export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
 
-
-  // { name, value  } = target;
-
-  inputChange = name  => event =>{
-    const { target } = event; 
-
-    this.setState({
-      [name]: target.value,
-    });
-  };
-
-  inputsSubmit = event => {
-    event.preventDefault();
-
-    const { onSubmit } = this.props;
-    onSubmit(this.state);
-
-    this.resetForm();
-  };
-
-  resetForm = () => {
-    this.setState(() => ({
-       name: '',
-       number: '',
-    }));
-  };
-
+    handleSubmit = event => {
+        event.preventDefault();
+        const name = event.target.name.value;
+        const  number= event.target.number.value;
+    
+        this.props.onSubmit({ name, number });
+    
+        event.target.reset();
+      };
+    
   render() {
     return (
-      <form className={style.phonebookInputs} onSubmit={this.inputsSubmit}>
+      <form className={style.phonebookInputs} onSubmit={this.handleSubmit}>
         <label className={style.phonebookInput}>
         <h4 className={style.phonebookInputTitle}>Name:</h4>
           <input
-            value={this.state.name}
-            onChange={this.inputChange('name')}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -53,8 +31,6 @@ export class ContactForm extends Component {
         <label className={style.phonebookInput}>
           <h4 className={style.phonebookInputTitle}>Number:</h4>
           <input
-            value={this.state.number}
-            onChange={this.inputChange('number')}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -69,3 +45,7 @@ export class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
