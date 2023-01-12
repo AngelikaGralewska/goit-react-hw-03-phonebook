@@ -75,7 +75,6 @@ export class App extends Component {
     }
   }
 
-
   render() {
     const { filter } = this.state;
     const getContactItem = this.getContacts();
