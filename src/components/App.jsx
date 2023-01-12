@@ -18,7 +18,6 @@ export class App extends Component {
     filter: ''
   };
 
-
   addContact = ({name, number}) => {
     const normalizedName = name.toLowerCase();
 
